@@ -1,38 +1,39 @@
-name: Deploy Quartz site to GitHub Pages
- 
+name: Deploy Quartz to GitHub Pages
+
 on:
   push:
-    branches:
-      - v4
- 
+    branches: [ v4 ]   # ← 네가 푸시하는 브랜치명으로 맞추기 (ex: main 또는 v4)
+  workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
- 
+
 concurrency:
   group: "pages"
   cancel-in-progress: false
- 
+
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for git info
+          fetch-depth: 0
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5    # ← Pages 메타데이터/권한 세팅
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - name: Install Dependencies
+          node-version: 22                  # Quartz v4 요구사항
+      - name: Install deps
         run: npm ci
       - name: Build Quartz
-        run: npx quartz build
+        run: npx quartz build               # 결과물이 ./public 에 생성
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
- 
+          path: public                      # ← 반드시 public 폴더 업로드
   deploy:
     needs: build
     environment:
