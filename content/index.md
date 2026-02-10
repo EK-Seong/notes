@@ -1,12 +1,10 @@
 ---
-title: My Metrics Notes
+title: Notes
 enableToc: false
 ---
 
 
-# My Metrics Notes
-
-This is a storage for my notes on econometrics research
+Some short notes for research ideas or findings
 
 
 ```component name="FolderContent" folder="documents" /```
